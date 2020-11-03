@@ -70,7 +70,7 @@ nginx        LoadBalancer   10.105.65.113   192.168.20.85   80:32262/TCP   24s
 ```
 As you can see, the `nginx` service was assigned IP address `192.168.20.85`.  Accessing that on a web browser should display the `nginx` welcome page
 
-
+<img src="https://github.com/dleewo/kubernetes-bare-metal-tasks/raw/main/images/metallb-nginx.png" width="600" />
 
 
 
