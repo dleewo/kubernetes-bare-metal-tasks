@@ -15,9 +15,9 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 
 The last secret is only ever done the first time you are installing.  If you ever delete MetalLB and then re-add it, just deploy the first two manifests
 
-MetalLB needs one or more IP address ranges.  Then, when a service specifies a tyep of `LoadBalancer`, MetalLB will assign one of those IP address thus making your application accessible externally.  The IP address range is set in a `ConfigMap`
+MetalLB needs one or more IP address ranges.  Then, when a service specifies a type of `LoadBalancer`, MetalLB will assign one of those IP addresses thus making your application accessible externally.  The IP address range is set in a `ConfigMap`
 
-Create the manifest as follows.  Be sure to set the IP address range to be used:
+Create the manifest as follows.  Be sure to set the IP address range to be used.  In my case, I am using a small range with just 5 IP addresses since this is only for a dev system:
 
 ```
 cat <<EOF | tee metallb-config.yaml
