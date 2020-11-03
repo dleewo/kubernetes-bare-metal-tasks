@@ -44,4 +44,37 @@ kubectl apply -f  metallb-config.yaml
 
 ## Smoke Test
 
+We'll deploly `nginx`
+
+```
+kubectl create deployment nginx --image=nginx
+```
+
+Then expose a service of type `LoadBalancer`
+
+```
+kubectl expose deployment nginx --port=80 --target-port=80 --name=nginx --type=LoadBalancer
+```
+
+Let's view the service:
+
+```
+kubectl get services
+```
+
+> Output
+
+```
+kubernetes   ClusterIP      10.96.0.1       <none>          443/TCP        7h24m
+nginx        LoadBalancer   10.105.65.113   192.168.20.85   80:32262/TCP   24s
+```
+As you can see, the `nginx` service was assigned IP address `192.168.20.85`.  Accessing that on a web browser should display the `nginx` welcome page
+
+
+
+
+
+
+
+
 
