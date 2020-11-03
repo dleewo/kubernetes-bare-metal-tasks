@@ -72,7 +72,12 @@ As you can see, the `nginx` service was assigned IP address `192.168.20.85`.  Ac
 
 <img src="https://github.com/dleewo/kubernetes-bare-metal-tasks/raw/main/images/metallb-nginx.png" width="600" border="1" />
 
+To cleanup the test deployment and service:
 
+```
+kubectl delete service nginx
+kubectl delete deployment nginx
+```
 
 
 
