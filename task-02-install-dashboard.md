@@ -114,11 +114,11 @@ Run following command:
 kubectl proxy
 ```
 
-Now, form the same PC where you ran the above command, opent he following URL in a web browser:
+Now, form the same PC where you ran the above command, open the following URL in a web browser:
 
 http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
 
-Select `Token` and paste the token you received earlier into the `Enter token` field.  You shjould now have access to the dashboard
+Select `Token` and paste the token you received earlier into the `Enter token` field.  You should now have access to the dashboard
 
 <img src="https://github.com/dleewo/kubernetes-bare-metal-tasks/raw/main/images/dashboard-login.png" width="600" border="1" />
 
@@ -178,7 +178,7 @@ spec:
   type: LoadBalancer
 ```
 
-If now examine the service again, you will see that an `EXTERNAL-IP` has been assigned:
+If you now examine the service again, you will see that an `EXTERNAL-IP` has been assigned:
 
 ```
 (base) Dereks-MacBook-Pro:.kube derek$ kubectl get services -n kubernetes-dashboard
@@ -187,16 +187,18 @@ dashboard-metrics-scraper   ClusterIP      10.99.19.154   <none>          8000/T
 kubernetes-dashboard        LoadBalancer   10.96.206.68   192.168.20.85   443:30675/TCP   18m
 ```
 
+You can access the dashboard using:
+
 https://192.168.20.85
 
->WARNING: Chrome and Safari will not let you access this site, but FireFox does.  
+>WARNING: Chrome and Safari will not let you access this site, but FireFox does.  We will configure SSL in the next step
 
 
 ## Use Custom SSL Certificates
 
-This assumes you have SSL certs.  If you have a domain, you can use [Let's Encrypt](https://letsencrypt.org/).  Place the files in the folder `$HOME/certs` (or change the following command to point ot the correct location).  In my case, the certificate files are `privkey.pem` and `fullchain.pem`
+This assumes you have SSL certs.  If you have a domain, you can use [Let's Encrypt](https://letsencrypt.org/) to obtain certificates.  Place the files in the folder `$HOME/certs` (or change the following command to point to the correct location).  In my case, the certificate files are `privkey.pem` and `fullchain.pem`
 
-The following will dleete the existing secrte and create a new one witht he SSL certificates
+The following will delete the existing secret and create a new one with the SSL certificates
 
 ```
 kubectl delete secret kubernetes-dashboard-certs -n kubernetes-dashboard
@@ -205,10 +207,11 @@ kubectl create secret generic kubernetes-dashboard-certs --from-file=$HOME/certs
 Now we need to edit the deployment
 
 ```
-kubectl edit deployment  kubernetes-dashboard -n kubernetes-dashboard
+kubectl edit deployment kubernetes-dashboard -n kubernetes-dashboard
 ```
 
-And in the args to the contain, add the `--tls-cert` and `--tls-key` arguments.  I removed the `--auto-generate-certificates` argumnent, but I believe it can be left it and it'll be used as a fallback
+And in the `args` to the container, add the `--tls-cert` and `--tls-key` arguments.  I removed the `--auto-generate-certificates` argumnent, but I believe it can be left in and it'll be used as a fallback.  Replace the arguments with your actual certificate filenames if they are different
+
 ```
     spec:
       containers:
