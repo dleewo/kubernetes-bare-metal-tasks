@@ -9,5 +9,5 @@ The next step is to confiugre and work with the cluster.  This repositry doument
 
 ## Tasks
 
-* [Install Load Balancer (MetalLB)](https://github.com/dleewo/kubernetes-bare-metal-tasks/blob/main/task-01-install-load-balancer.md)
-
+* [Install Load Balancer (MetalLB)](task-01-install-load-balancer.md)
+* [Install The Kubernetes Dashboard](task-2-install-dashboard.md)
